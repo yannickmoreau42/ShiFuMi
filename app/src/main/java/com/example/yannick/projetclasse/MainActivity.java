@@ -1,5 +1,6 @@
 package com.example.yannick.projetclasse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,38 +10,40 @@ import android.widget.TextView;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    public int var_a = 0;
+    public int var_b = 0;
     private Button ciseaux;
     private Button papier;
     private Button pierre;
+    private Button stat;
     private TextView res;
     private TextView ordi;
-    private String random;
     private TextView resultat;
+    private String random;
     private String rep;
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ciseaux = (Button) findViewById(R.id.button);
-        papier = (Button) findViewById(R.id.button2);
-        pierre = (Button) findViewById(R.id.button3);
-        res = (TextView) findViewById(R.id.textview4);
-        ordi = (TextView) findViewById(R.id.textView6);
-        resultat = (TextView) findViewById(R.id.textView8);
 
+        ciseaux = (Button) findViewById(R.id.btn_ciseaux);
+        papier = (Button) findViewById(R.id.btn_papier);
+        pierre = (Button) findViewById(R.id.btn_pierre);
+        stat = (Button) findViewById(R.id.btn_résultats);
+
+        res = (TextView) findViewById(R.id.tv_joueur_1);
+        ordi = (TextView) findViewById(R.id.tv_joueur_2);
+        resultat = (TextView) findViewById(R.id.tv_résultat);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-
         ciseaux.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 res.setText("Ciseaux");
                 Random choix = new Random();
                 int a = choix.nextInt(3);
@@ -60,9 +63,11 @@ public class MainActivity extends AppCompatActivity {
                         random = " L'ordinateur à gagné";
                     else
                         random = "Le joueur à gagné";
+                        var_a=var_a+1;
 
                 }
                 resultat.setText(random);
+
 
             }
         });
@@ -88,11 +93,8 @@ public class MainActivity extends AppCompatActivity {
                         random = " L'ordinateur à gagné";
                     else
                         random = "Le joueur à gagné";
-
                 }
                 resultat.setText(random);
-
-
             }
         });
         papier.setOnClickListener(new View.OnClickListener() {
@@ -121,8 +123,19 @@ public class MainActivity extends AppCompatActivity {
                                           resultat.setText(random);
                                       }
                                   }
-
         );
+
+        stat.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("var_a", var_a);
+                startActivity(intent);
+                //startActivity(new Intent(MainActivity.this, SecondActivity.class));
+
+            }
+        });
 
 
     }
